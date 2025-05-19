@@ -2,14 +2,20 @@ package com.example.projetoappdoacao;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText edtNome, edtEmail, edtTelefone, edtDocumento, edtSenha, edtConfirmarSenha;
     Spinner spinnerTipo;
     Button btnRegisterUser;
+
+    // Simula banco de usuários (em app real, use banco ou SharedPreferences)
+    static ArrayList<Usuario> usuarios = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new String[]{"Doador", "Ong"});
         spinnerTipo.setAdapter(adapter);
 
-        // Lógica do botão
+        // Botão registra usuário
         btnRegisterUser.setOnClickListener(v -> registrarUsuario());
     }
 
@@ -51,16 +57,37 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Email inválido", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!senha.equals(confirmarSenha)) {
             Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Redirecionar de acordo com o tipo
+        // Verifica se já existe email cadastrado
+        for (Usuario u : usuarios) {
+            if (u.email.equalsIgnoreCase(email)) {
+                Toast.makeText(this, "Email já cadastrado", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        // Cria novo usuário e adiciona na lista
+        Usuario novoUsuario = new Usuario(nome, email, telefone, documento, senha, tipo);
+        usuarios.add(novoUsuario);
+
+        Toast.makeText(this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
+
+        // Redireciona para dashboard de acordo com o tipo
         if (tipo.equals("Ong")) {
             startActivity(new Intent(this, OngDashboard.class));
         } else {
             startActivity(new Intent(this, DoadorDashboard.class));
         }
+
+        finish(); // Fecha essa activity para não voltar ao registro
     }
 }

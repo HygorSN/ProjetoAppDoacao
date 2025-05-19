@@ -31,7 +31,7 @@ public class CadFamilia extends AppCompatActivity {
             Intent resultado = new Intent();
             resultado.putExtra("novaFamilia", resumo);
             setResult(RESULT_OK, resultado);
-            finish(); // Retorna para a tela anterior
+            finish();
         });
     }
 }

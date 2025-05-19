@@ -23,4 +23,3 @@ public class OngDashboard extends AppCompatActivity {
         btnDoacao.setOnClickListener(v -> startActivity(new Intent(this, OngDoacao.class)));
     }
 }
-

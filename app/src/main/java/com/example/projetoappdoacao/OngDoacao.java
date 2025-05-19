@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 public class OngDoacao extends AppCompatActivity {
@@ -19,7 +20,6 @@ public class OngDoacao extends AppCompatActivity {
         listaDoacoes = findViewById(R.id.listaDoacoes);
         doacoes = new ArrayList<>();
 
-        // Dados mockados
         doacoes.add("Alex - Arroz(3), Feijão(4), Cesta(2) - Coletar");
         doacoes.add("Maria - Cesta(1), Arroz(1) - Estocado");
 
@@ -39,14 +39,11 @@ public class OngDoacao extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Detalhes da Doação")
                 .setMessage(detalhes)
-                .setPositiveButton("Marcar como Coletado", (dialog, which) -> {
-                    Toast.makeText(this, "Status atualizado para Coletado", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("Estocado", (dialog, which) -> {
-                    Toast.makeText(this, "Status atualizado para Estocado", Toast.LENGTH_SHORT).show();
-                })
+                .setPositiveButton("Marcar como Coletado", (dialog, which) ->
+                        Toast.makeText(this, "Status atualizado para Coletado", Toast.LENGTH_SHORT).show())
+                .setNegativeButton("Estocado", (dialog, which) ->
+                        Toast.makeText(this, "Status atualizado para Estocado", Toast.LENGTH_SHORT).show())
                 .setNeutralButton("Fechar", null)
                 .show();
     }
 }
-
